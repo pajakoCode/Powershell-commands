@@ -1,0 +1,15 @@
+# Setup guide for joining a Server Core to an existing Domain Controller
+
+### 1. Set the correct IP configurations #############################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+New-NetIPAddress -InterfaceAlias "Ethernet" `
+-IPAddress 172.16.0.2 `
+-PrefixLength 24 `
+-DefaultGateway 172.16.0.254; Set-DnsClientServerAddress `
+-InterfaceAlias "Ethernet" `
+-ServerAddresses 172.16.0.1
+
+
+### 2. Join the existing domain ######################################################################################
+----------------------------------------------------------------------------------------------------------------------
