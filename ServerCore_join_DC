@@ -46,6 +46,9 @@ Install-ADDSDomainController `
 ### 5. Verification ##################################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
+## Force Sync
+repadmin /syncall /AdeP
+
 ## På primær DC
 Get-ADDomainController -Filter * | Select-Object Name, Domain, Site, IsReadOnly, IsGlobalCatalog, IPv4Address
 
