@@ -31,11 +31,11 @@ Shutdown /r /t 0
 Import-Module ADDSDeployment 
 
 Install-ADDSDomainController `
-  -DomainName "pajako.domain.dk" `
+  -DomainName "DomainName.com" `
   -Credential (Get-Credential) `
   -SiteName "Default-First-Site-Name" `
   -InstallDNS `
-  -ReplicationSourceDC "YourExistingDC.pajako.domain.dk" `
+  -ReplicationSourceDC "DCHostName.DomainName.com" `
   -DatabasePath "C:\Windows\NTDS" `
   -LogPath "C:\Windows\NTDS" `
   -SysvolPath "C:\Windows\SYSVOL" `
@@ -47,10 +47,10 @@ Install-ADDSDomainController `
 ----------------------------------------------------------------------------------------------------------------------
 
 Install-ADDSDomainController `
-  -DomainName "pajako.domain.dk" ` 
+  -DomainName "DomainName.com" ` 
   -Credential (Get-Credential) `
   -SiteName "Default-First-Site-Name" `
-  -InstallDNS -ReplicationSourceDC "DC1" `
+  -InstallDNS -ReplicationSourceDC "DCHostName" `
   -DatabasePath "C:\Windows\NTDS" `
   -LogPath "C:\Windows\NTDS" `
   -SysvolPath "C:\Windows\SYSVOL" `
