@@ -4,12 +4,52 @@
 ----------------------------------------------------------------------------------------------------------------------
 
 New-NetIPAddress -InterfaceAlias "Ethernet" `
--IPAddress 172.16.0.2 `
--PrefixLength 24 `
--DefaultGateway 172.16.0.254; Set-DnsClientServerAddress `
--InterfaceAlias "Ethernet" `
--ServerAddresses 172.16.0.1
+  -IPAddress 172.16.0.2 `
+  -PrefixLength 24 `
+  -DefaultGateway 172.16.0.254; Set-DnsClientServerAddress `
+  -InterfaceAlias "Ethernet" `
+  -ServerAddresses 172.16.0.1
 
 
-### 2. Join the existing domain ######################################################################################
+### 2. Remame device and join domain #################################################################################
 ----------------------------------------------------------------------------------------------------------------------
+
+Rename-Computer -NewName "DC2" -Force `
+Add-Computer -DomainName "DomainNameHere.com" -Credential (Get-Credential) `
+Restart-Computer
+
+
+### 3. Install AD DS #################################################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+Import-Module ADDSDeployment 
+
+Install-ADDSDomainController `
+  -DomainName "pajako.domain.dk" `
+  -Credential (Get-Credential) `
+  -SiteName "Default-First-Site-Name" `
+  -InstallDNS `
+  -ReplicationSourceDC "YourExistingDC.pajako.domain.dk" `
+  -DatabasePath "C:\Windows\NTDS" `
+  -LogPath "C:\Windows\NTDS" `
+  -SysvolPath "C:\Windows\SYSVOL" `
+  -NoGlobalCatalog:$false `
+  -Force:$true
+
+
+### 4. Promote to Domain Controller ##################################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+Install-ADDSDomainController `
+  -DomainName "pajako.domain.dk" ` 
+  -Credential (Get-Credential) `
+  -SiteName "Default-First-Site-Name" `
+  -InstallDNS -ReplicationSourceDC "DC1" `
+  -DatabasePath "C:\Windows\NTDS" `
+  -LogPath "C:\Windows\NTDS" `
+  -SysvolPath "C:\Windows\SYSVOL" `
+  -NoGlobalCatalog:$false `
+  -Force:$true
+
+
+
