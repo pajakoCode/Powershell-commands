@@ -43,7 +43,7 @@ Install-ADDSDomainController `
   -Force:$true
 
 
-### 6. Promote to Domain Controller ##################################################################################
+### 5. Verification ##################################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
 ## På primær DC
@@ -52,6 +52,7 @@ Get-ADDomainController -Filter * | Select-Object Name, Domain, Site, IsReadOnly,
 ## På joined DC
 nltest /dclist:yourdomain.com
 
-
+## Checker existerende brugere
+Get-ADUser -Filter * | Select-Object Name, SamAccountName
 
 
