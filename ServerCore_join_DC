@@ -18,14 +18,14 @@ Rename-Computer -NewName "DC2" -Force `
 Shutdown /r /t 0
 
 
-### 3. Join domain #################################################################################################
+### 3. Join domain ###################################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
 Add-Computer -DomainName "DomainNameHere.com" -Credential (Get-Credential) `
 Shutdown /r /t 0
 
 
-### 4. Install AD DS #################################################################################################
+### 4. Install AD DS and promote to DC ###############################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
 Import-Module ADDSDeployment 
@@ -43,26 +43,14 @@ Install-ADDSDomainController `
   -Force:$true
 
 
-### 5. Promote to Domain Controller ##################################################################################
+### 6. Promote to Domain Controller ##################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
-Install-ADDSDomainController `
-  -DomainName "<DomainName.com>" ` 
-  -Credential (Get-Credential) `
-  -SiteName "Default-First-Site-Name" `
-  -InstallDNS -ReplicationSourceDC "<DCHostName>" `
-  -DatabasePath "C:\Windows\NTDS" `
-  -LogPath "C:\Windows\NTDS" `
-  -SysvolPath "C:\Windows\SYSVOL" `
-  -NoGlobalCatalog:$false `
-  -Force:$true
-
-
-### 5. Promote to Domain Controller ##################################################################################
-----------------------------------------------------------------------------------------------------------------------
-
-
+## På primær DC
 Get-ADDomainController -Filter * | Select-Object Name, Domain, Site, IsReadOnly, IsGlobalCatalog, IPv4Address
+
+## På joined DC
+nltest /dclist:yourdomain.com
 
 
 
