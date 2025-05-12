@@ -52,7 +52,7 @@ Get-ADDomainController -Filter * | Select-Object Name, Domain, Site, IsReadOnly,
 ## På joined DC
 nltest /dclist:yourdomain.com
 
-## Checker existerende brugere
+## Checker eksisterende brugere
 Get-ADUser -Filter * | Select-Object Name, SamAccountName
 
 
