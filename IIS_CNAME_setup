@@ -1,28 +1,26 @@
-# Setup commandoer til IIS og CNAME
+[System.Net.Dns]::GetHostByName(($env:computerName)).HostName# Setup commandoer til IIS og CNAME
 
 ### 1. Installer IIS på serveren #####################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
-Install-WindowsFeature DHCP -IncludeManagementTools
+  Install-WindowsFeature DHCP -IncludeManagementTools
 
 
 ### 2. Verify - Find serverens FQDN ##################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
 # On the server with IIS run:
-$env:COMPUTERNAME
-or
-hostname
+  [System.Net.Dns]::GetHostByName(($env:computerName)).HostName
 
 
 ### 3.Add a CNAME-record to the DNS ##################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
-Add-DnsServerResourceRecordCName -Name "intranet" -HostNameAlias "web1.pajako.dk" -ZoneName "pajako.dk"
+  Add-DnsServerResourceRecordCName -Name "intranet" -HostNameAlias "web1.pajako.dk" -ZoneName "pajako.dk"
 
 
 ### 4.Verify access to the IIS #######################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
 # In your browser on a client:
-http://intranet
+  http://intranet
