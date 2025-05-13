@@ -1,0 +1,36 @@
+# Setup guide for DHCP on a Domain Controller (DC IP = 172.16.0.1 - Domain = pajako.dk)
+
+### 1. install the required tools first ##############################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+Install-WindowsFeature DHCP -IncludeManagementTools
+
+
+### 2. Add the DHCP service and verify ###############################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+# Add the DHCP server
+Add-DhcpServerInDC -DnsName DHCP1.name.com -IPAddress <172.16.0.1>
+
+# Verify
+Get-DhcpServerInDC
+
+
+### 3. Configure iPv4 Scope #########################################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+Add-DhcpServerv4Scope -Name "ExampleMainScope" -StartRange <172.16.0.100> -EndRange <172.16.0.200> -SubnetMask 255.255.255.0
+
+
+### 4. Ensure the scope is active by activating it ###################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+Set-DhcpServerv4Scope -ScopeId 172.16.0.0 -State Active
+
+
+### 5. Set default gateway and DNS options  ##########################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+Set-DhcpServerv4OptionValue -ScopeId 172.16.0.0 -Router 172.16.0.254
+Set-DhcpServerv4OptionValue -ScopeId 172.16.0.0 -DnsServer 172.16.0.1
+Set-DhcpServerv4OptionValue -ScopeId 172.16.0.0 -DnsDomain pajako.dk
