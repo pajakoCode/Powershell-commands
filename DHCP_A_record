@@ -1,0 +1,12 @@
+# Adding an A record (AAAA) in your DNS' forward lookup zone
+
+### 1. Set the correct IP configurations #############################################################################
+----------------------------------------------------------------------------------------------------------------------
+
+# Tilføj A record
+Add-DnsServerResourceRecordA -Name "Caesar" -ZoneName "pajako.dk" -IPv4Address 172.16.0.250
+
+# verify
+nslookup Caesar (
+
+ping Caesar (giver ikke svar tilbage, dødt link)
