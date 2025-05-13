@@ -9,7 +9,9 @@ Install-WindowsFeature DHCP -IncludeManagementTools
 ### 2. Verify - Find serverens FQDN ##################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
-# På erveren med IIS kør:
+# On the server with IIS run:
+$env:COMPUTERNAME
+or
 hostname
 
 
