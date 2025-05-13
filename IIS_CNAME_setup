@@ -16,7 +16,7 @@
 ### 3.Add a CNAME-record to the DNS ##################################################################################
 ----------------------------------------------------------------------------------------------------------------------
 
-  Add-DnsServerResourceRecordCName -Name "intranet" -HostNameAlias "web1.pajako.dk" -ZoneName "pajako.dk"
+  Add-DnsServerResourceRecordCName -Name "intranet" -HostNameAlias "DC1.pajako.dk" -ZoneName "pajako.dk"
 
 
 ### 4.Verify access to the IIS #######################################################################################
